@@ -1,3 +1,3 @@
-# netev
+# netev - Node.js events over streams
 
-Network events for node based on the streaming API.
+`netev` allows you to wrap streams as normal event emitters, for both sending & recieving data.
