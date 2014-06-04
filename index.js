@@ -36,7 +36,7 @@ var NetEv = function(stream, debug) {
             for(var i=0; i<evs.length; i++) {
                 if(evs[i].length < 2) continue;
 
-                var json = evs[i] + '}';
+                var json = evs[i];
                 var data = JSON.parse(json);
                 log('incoming event: ' + data.name, data.data);
 

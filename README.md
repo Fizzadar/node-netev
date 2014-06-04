@@ -1,6 +1,6 @@
 # netev - Node.js events over streams
 
-`netev` allows you to wrap streams as normal event emitters, for both sending & recieving data.
+`netev` allows you to wrap streams as event emitters, for both sending & recieving data. It overwrites the `.emit` function and sends them over the network, and it captures network data and triggers original `.emit` calls. It's very "low level" and you'll need to ensure that both streams are wrapped (and authed) before sending any events.
 
 
 ## Install
