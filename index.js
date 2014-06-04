@@ -31,8 +31,8 @@ var NetEv = function(stream, debug) {
     // Listen for data and emit events
     var callback = function(data) {
         buffer += data.toString();
-        if(buffer.indexOf('}END') > 0) {
-            var evs = buffer.split('}END');
+        if(buffer.indexOf('\n') > 0) {
+            var evs = buffer.split('\n');
             for(var i=0; i<evs.length; i++) {
                 if(evs[i].length < 2) continue;
 
@@ -62,7 +62,7 @@ var NetEv = function(stream, debug) {
             data: data,
             name: event_name
         }
-        stream.write(JSON.stringify(event_data) + 'END');
+        stream.write(JSON.stringify(event_data) + '\n');
         log('outgoing event: ' + event_name, data);
     };
 };
