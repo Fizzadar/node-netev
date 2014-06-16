@@ -43,6 +43,9 @@ var NetEv = function(stream, debug) {
                 // Prepare normal emit
                 data.data.unshift(data.name);
                 emit.apply(self, data.data);
+
+                // Set buffer to any trailing end
+                buffer = evs[evs.length - 1];
             }
         }
     };
