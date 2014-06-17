@@ -1,6 +1,6 @@
 {
     "name": "netev",
-    "version": "0.9.4",
+    "version": "0.9.5",
     "repository": {
         "type": "git",
         "url": "http://github.com/Fizzadar/node-netev.git"

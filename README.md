@@ -10,7 +10,7 @@ netev allows you to wrap streams as event emitters, for both sending & recieving
 
 ## Usage
 
-    var netev = require('netev');
+    var netev = require('netev', <debug=false>);
     
     // Wrap a stream, returns an EventEmitter
     var events = netev(stream);

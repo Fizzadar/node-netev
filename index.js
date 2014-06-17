@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // NetEv
 // File: index.js
 // Desc: network events for Node
@@ -10,18 +8,18 @@ var events = require('events'),
     util = require('util');
 
 
-var NetEv = function(stream, debug) {
+var NetEv = function(counter, stream, debug) {
     events.EventEmitter.call(this);
 
     var log = function() {
         if(debug) {
             var args = Array.prototype.slice.call(arguments, 0);
-            args.unshift('[NetEv]');
+            args.unshift('[NetEv #' + counter + ']');
             console.log.apply(console, args);
         }
     }
     if(debug)
-        log('Debug enabled');
+        log('debug enabled');
 
     // Copy original emit to send when receive net-events
     var emit = this.emit,
@@ -73,7 +71,9 @@ util.inherits(NetEv, events.EventEmitter);
 
 
 // The netev wrapper
+var counter = 0;
 var wrap = function(stream, debug) {
-    return new NetEv(stream, debug);
+    counter++;
+    return new NetEv(counter, stream, debug);
 };
 module.exports = wrap;
