@@ -22,3 +22,83 @@ netev allows you to wrap streams as event emitters, for both sending & recieving
     
     // Send events as normal
     events.emit('outgoing', {some: 'data'}, 'some more');
+
+
+## Full example with auth
+
+Here we are turning `stream` into an `event_stream`, connecting `master.js` with `client.js`, the flow is:
+
++ Client connects to master
++ Client immediately sends a shared key to the master
++ Master verifies, writes back a hello statement and wraps the stream with `netev`, and subscribes to its `activate` event
++ Client sees hello statement, wraps the stream with `netev` and sends down an `activate` event
+
+```shared function (imported as utils.js/similar)
+```
+
+```
+    receiveUntil = function(stream, want, callback, options) {
+        var buffer = '';
+
+        if(options.timeout) {
+            var timeout = setTimeout(function() {
+                stream.end();
+            }, options.timeout * 1000);
+        }
+
+        var onData = function(data) {
+            buffer += data.toString();
+            if(buffer.length >= want.length) {
+                if(buffer == want) {
+                    if(options.timeout)
+                        clearTimeout(timeout);
+
+                    stream.removeListener('data', onData);
+                    callback(stream);
+                } else {
+                    // Rejected!
+                    stream.end();
+                }
+            }
+        }
+        stream.on('data', onData);
+    };
+```
+
+```master.js
+```
+
+```
+    // Wait for a known shared key
+    utils.receiveUntil(stream, this.share_key, function(stream) {
+            var cleint_events = netev(stream, self.debug_netev);
+
+            // Notify via stream, expect event back
+            stream.write('HELLO CLIENT');
+            cleint_events.on('activate', function() {
+                // do something with cleint_events here
+            });
+        }, {timeout: 10});
+    };
+```
+
+```client.js
+```
+
+```
+    // Connect to master
+    var connection = net.connect(...);
+    var stream = connection.on('connect', function() {
+        // Send the shared key immediately
+        stream.write(self.share_key);
+
+        // Sent upon correct share_key, master's already netev wrapped
+        utils.receiveUntil(stream, 'HELLO CLIENT', function(stream) {
+            // Wrap  the stream for incoming events
+            var master_events = netev(stream, self.debug_netev);
+
+            // Immediately activate event
+            master_events.emit('activate');
+        }, {timeout: 10});
+    });
+```
