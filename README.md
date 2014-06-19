@@ -10,6 +10,7 @@ netev allows you to wrap streams as event emitters, for both sending & recieving
 
 ## Usage
 
+```js
     var netev = require('netev', <debug=false>);
     
     // Wrap a stream, returns an EventEmitter
@@ -22,7 +23,7 @@ netev allows you to wrap streams as event emitters, for both sending & recieving
     
     // Send events as normal
     events.emit('outgoing', {some: 'data'}, 'some more');
-
+```
 
 ## Full example with auth
 
@@ -35,7 +36,7 @@ Here we are turning `stream` into an `event_stream`, connecting `master.js` with
 
 ##### shared function (imported as utils.js/similar)
 
-```
+```js
     receiveUntil = function(stream, want, callback, options) {
         var buffer = '';
 
@@ -66,7 +67,7 @@ Here we are turning `stream` into an `event_stream`, connecting `master.js` with
 
 ##### master.js
 
-```
+```js
     // Wait for a known shared key
     utils.receiveUntil(stream, this.share_key, function(stream) {
             var cleint_events = netev(stream, self.debug_netev);
@@ -82,7 +83,7 @@ Here we are turning `stream` into an `event_stream`, connecting `master.js` with
 
 ##### client.js
 
-```
+```js
     // Connect to master
     var connection = net.connect(...);
     var stream = connection.on('connect', function() {
