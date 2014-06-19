@@ -33,8 +33,7 @@ Here we are turning `stream` into an `event_stream`, connecting `master.js` with
 + Master verifies, writes back a hello statement and wraps the stream with `netev`, and subscribes to its `activate` event
 + Client sees hello statement, wraps the stream with `netev` and sends down an `activate` event
 
-```shared function (imported as utils.js/similar)
-```
+##### shared function (imported as utils.js/similar)
 
 ```
     receiveUntil = function(stream, want, callback, options) {
@@ -65,8 +64,7 @@ Here we are turning `stream` into an `event_stream`, connecting `master.js` with
     };
 ```
 
-```master.js
-```
+###### master.js
 
 ```
     // Wait for a known shared key
@@ -82,8 +80,7 @@ Here we are turning `stream` into an `event_stream`, connecting `master.js` with
     };
 ```
 
-```client.js
-```
+##### client.js
 
 ```
     // Connect to master
