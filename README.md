@@ -64,7 +64,7 @@ Here we are turning `stream` into an `event_stream`, connecting `master.js` with
     };
 ```
 
-###### master.js
+##### master.js
 
 ```
     // Wait for a known shared key
